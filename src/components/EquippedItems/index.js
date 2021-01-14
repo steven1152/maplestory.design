@@ -17,10 +17,6 @@ class EquippedItems extends Component {
     const isGMSRegion = localStorage['region'].toLowerCase() == 'gms'
     const hasName = name && name.length > 0
 
-    const ad = document.querySelector(".adsbygoogle")
-    if (ad.offsetParent === null)
-      document.querySelector('.anti-ad').className = 'anti-ad show'
-
     return (
       <div className='equipped-items'>
         <div className='equipped-items-header'>
