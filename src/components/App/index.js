@@ -76,7 +76,7 @@ function toCamel(o) {
   return newO
 }
 
-let wzPromise = axios.get(`https://maplestory.io/api/wz?cache=false`)
+let wzPromise = axios.get(`${process.env.REACT_APP_API_URL}/api/wz?cache=false`)
 .then(response => {
   let WZs = _.map(response.data.filter(wzEntry => wzEntry.isReady), wzEntry => {
     return {
@@ -100,7 +100,7 @@ let wzPromise = axios.get(`https://maplestory.io/api/wz?cache=false`)
 
 let maps = []
 let mapsFilter = null
-let mapPromise = axios.get(`https://maplestory.io/api/${localStorage['region']}/${localStorage['version']}/map`).then(response => {
+let mapPromise = axios.get(`${process.env.REACT_APP_API_URL}/api/${localStorage['region']}/${localStorage['version']}/map`).then(response => {
       maps = _.map(response.data, map => {
         return {
           label: [map.streetName, map.name].join(' - '),
@@ -204,13 +204,12 @@ class App extends Component {
       if (!pet.id) pet.id = Date.now() + (index + 1)
       pet.type = 'pet'
       pet.position = pet.position || { x: 0, y: 0}
-      pet.summary = `https://maplestory.io/api/${this.state.region}/${this.state.version}/pet/${pet.petId}/${pet.animation || 'stand0'}/${pet.frame || 0}/${_.values(pet.selectedItems).map(item => item.id).join(',')}?resize=${pet.zoom || 1}`
+      pet.summary = `${process.env.REACT_APP_API_URL}/api/${this.state.region}/${this.state.version}/pet/${pet.petId}/${pet.animation || 'stand0'}/${pet.frame || 0}/${_.values(pet.selectedItems).map(item => item.id).join(',')}?resize=${pet.zoom || 1}`
     })
 
     if ((this.state.selectedIndex + 1) > (this.state.characters.length + this.state.pets.length) || !this.state.characters.length)
       this.state.selectedIndex = false;
 
-    this.updateBannerAdBlur()
 
     document.addEventListener("click", this.handleClick.bind(this))
 
@@ -240,11 +239,6 @@ class App extends Component {
     if (!found && this.state.colorPickerOpen) this.setState({ colorPickerOpen: false })
   }
 
-  updateBannerAdBlur() {
-    const topAd = document.getElementById("top-banner-ad")
-    topAd.className = this.state.isModalOpen ? "modal-blur" : "";
-  }
-
   render() {
     const {
       characters,
@@ -260,7 +254,6 @@ class App extends Component {
       language,
       music
     } = this.state
-    this.updateBannerAdBlur()
 
     const localized = Localize.getLocalized(language)
 
@@ -332,7 +325,7 @@ class App extends Component {
           localized={localized}
           onSetModalOpen={this.setModalOpen.bind(this)} />
         <NotificationContainer />
-        { music ? <audio src={`//maplestory.io/api/${this.state.region}/${this.state.version}/map/${selectedMap}/bgm`} autoPlay={true} loop={true} /> : '' }
+        { music ? <audio src={`//127.0.0.1:5000/api/${this.state.region}/${this.state.version}/map/${selectedMap}/bgm`} autoPlay={true} loop={true} /> : '' }
       </div>
     )
   }
@@ -351,7 +344,6 @@ class App extends Component {
       colorPickerOpen,
       language
     } = this.state
-    this.updateBannerAdBlur()
 
     const localized = Localize.getLocalized(language)
 
@@ -522,7 +514,7 @@ class App extends Component {
       selectedItems: [],
       id: Date.now(),
       type: 'pet',
-      summary: `https://maplestory.io/api/${this.state.region}/${this.state.version}/pet/${petId}/stand0`,
+      summary: `${process.env.REACT_APP_API_URL}/api/${this.state.region}/${this.state.version}/pet/${petId}/stand0`,
       animation: 'stand0',
       visible: true,
       frame: 0,
@@ -635,7 +627,7 @@ class App extends Component {
       ...newProps
     }
 
-    currentPet.summary = `https://maplestory.io/api/${this.state.region}/${this.state.version}/pet/${currentPet.petId}/${currentPet.animation || 'stand0'}/${currentPet.frame || 0}/${_.values(currentPet.selectedItems).map(item => item.id).join(',')}?resize=${currentPet.zoom || 1}`
+    currentPet.summary = `${process.env.REACT_APP_API_URL}/api/${this.state.region}/${this.state.version}/pet/${currentPet.petId}/${currentPet.animation || 'stand0'}/${currentPet.frame || 0}/${_.values(currentPet.selectedItems).map(item => item.id).join(',')}?resize=${currentPet.zoom || 1}`
 
     this.setState({
         pets: pets

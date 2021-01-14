@@ -28,7 +28,7 @@ class IntroModal extends Component {
         <p>This is an experimental version. If items or characters aren't rendering, please switch from the "latest" Maplestory version to any other available.</p>
         <h3>Need assistance or have a question?</h3>
         <p>Join our community on <a href="https://discord.gg/D65Grk9">Discord</a> to ask questions or reach out to our team by <a href="mailto:support@crr.io" target="_blank">email</a> if you need more help.</p>
-        <h3>Disclaimer</h3><span className="avatar-box"><img src="https://maplestory.io/api/gms/latest/character/center/2000/1073181,1053109,1053109,1004862,33005,21544/sit/0"/></span>
+        <h3>Disclaimer</h3><span className="avatar-box"><img src={`${process.env.REACT_APP_API_URL}/api/gms/latest/character/center/2000/1073181,1053109,1053109,1004862,33005,21544/sit/0`} /></span>
         <p>All assets and resources regarding MapleStory thereof are the sole property of <a href="//nexon.net">Nexon</a> and applies to their Terms of Use. By using this service, you agree to respect all copyrights and to not use any assets commercially without permission from Nexon.</p>
         <span onClick={this.closeModal.bind(this)} className="btn bg-green text-white intro-dismiss"><i className="fa fa-check"></i> I understand</span>
       </Modal>
